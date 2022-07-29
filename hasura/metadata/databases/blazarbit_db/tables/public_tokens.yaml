@@ -1,0 +1,134 @@
+table:
+  name: tokens
+  schema: public
+object_relationships:
+- name: blockchainByBlockchain
+  using:
+    foreign_key_constraint_on: blockchain
+- name: channel
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: blockchain
+        minted_channel: channel_id
+        minted_port: port_id
+      insertion_order: null
+      remote_table:
+        name: channels
+        schema: public
+- name: token
+  using:
+    manual_configuration:
+      column_mapping:
+        base_blockchain: blockchain
+        base_denom: denom
+      insertion_order: null
+      remote_table:
+        name: tokens
+        schema: public
+- name: tokens_datum
+  using:
+    manual_configuration:
+      column_mapping:
+        base_blockchain: base_blockchain
+        base_denom: base_denom
+      insertion_order: null
+      remote_table:
+        name: tokens_data
+        schema: public
+array_relationships:
+- name: blockchains
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: network_id
+        denom: fee_token_denom
+      insertion_order: null
+      remote_table:
+        name: blockchains
+        schema: public
+- name: donations
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: blockchain
+        denom: denom
+      insertion_order: null
+      remote_table:
+        name: donations
+        schema: public
+- name: nft_contracts
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: blockchain
+        denom: payment_token_denom
+      insertion_order: null
+      remote_table:
+        name: nft_contracts
+        schema: public
+- name: pools
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: blockchain
+        denom: base_token_denom
+      insertion_order: null
+      remote_table:
+        name: pools
+        schema: public
+- name: poolsByQuoteTokenDenomBlockchain
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: blockchain
+        denom: quote_token_denom
+      insertion_order: null
+      remote_table:
+        name: pools
+        schema: public
+- name: protocolInstructionsByPaymentMethodDenomPaymentMethodBlockchain
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: payment_method_blockchain
+        denom: payment_method_denom
+      insertion_order: null
+      remote_table:
+        name: protocol_instructions
+        schema: public
+- name: protocol_instructions
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: destination_asset_blockchain
+        denom: destination_asset_denom
+      insertion_order: null
+      remote_table:
+        name: protocol_instructions
+        schema: public
+- name: tokens
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: base_blockchain
+        denom: base_denom
+      insertion_order: null
+      remote_table:
+        name: tokens
+        schema: public
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - base_blockchain
+    - base_denom
+    - blockchain
+    - denom
+    - minted_channel
+    - minted_port
+    - previous_wrap_blockchain
+    - previous_wrap_denom
+    filter: {}
+    limit: 10000
+  role: front

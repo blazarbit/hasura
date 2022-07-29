@@ -1,1 +1,9 @@
-[]
+- "!include public_blockchains.yaml"
+- "!include public_channels.yaml"
+- "!include public_denom_traces.yaml"
+- "!include public_donations.yaml"
+- "!include public_nft_contracts.yaml"
+- "!include public_pools.yaml"
+- "!include public_protocol_instructions.yaml"
+- "!include public_tokens.yaml"
+- "!include public_tokens_data.yaml"

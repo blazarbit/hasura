@@ -1,0 +1,60 @@
+table:
+  name: blockchains
+  schema: public
+object_relationships:
+- name: token
+  using:
+    manual_configuration:
+      column_mapping:
+        fee_token_denom: denom
+        network_id: blockchain
+      insertion_order: null
+      remote_table:
+        name: tokens
+        schema: public
+array_relationships:
+- name: nft_contracts
+  using:
+    foreign_key_constraint_on:
+      column: blockchain
+      table:
+        name: nft_contracts
+        schema: public
+- name: pools
+  using:
+    foreign_key_constraint_on:
+      column: blockchain
+      table:
+        name: pools
+        schema: public
+- name: tokens
+  using:
+    foreign_key_constraint_on:
+      column: blockchain
+      table:
+        name: tokens
+        schema: public
+- name: tokens_data
+  using:
+    foreign_key_constraint_on:
+      column: base_blockchain
+      table:
+        name: tokens_data
+        schema: public
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - fee_token_avg_amount
+    - fee_token_denom
+    - gas_price
+    - lcd_node_address
+    - logo_url
+    - name
+    - network_id
+    - prefix
+    - protocol_contract_address
+    - rpc_node_address
+    filter: {}
+    limit: 10000
+  role: front

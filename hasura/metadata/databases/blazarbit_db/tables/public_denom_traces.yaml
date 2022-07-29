@@ -1,0 +1,13 @@
+table:
+  name: denom_traces
+  schema: public
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - denom
+    - hash
+    - path
+    filter: {}
+    limit: 10000
+  role: front

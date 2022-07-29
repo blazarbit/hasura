@@ -1,0 +1,38 @@
+table:
+  name: donations
+  schema: public
+object_relationships:
+- name: token
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: blockchain
+        denom: denom
+      insertion_order: null
+      remote_table:
+        name: tokens
+        schema: public
+array_relationships:
+- name: protocol_instructions
+  using:
+    manual_configuration:
+      column_mapping:
+        address: destination_asset_address
+        blockchain: destination_asset_blockchain
+        denom: destination_asset_denom
+      insertion_order: null
+      remote_table:
+        name: protocol_instructions
+        schema: public
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - address
+    - blockchain
+    - denom
+    - logo_url
+    - name
+    filter: {}
+    limit: 10000
+  role: front

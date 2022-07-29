@@ -1,0 +1,43 @@
+table:
+  name: nft_contracts
+  schema: public
+object_relationships:
+- name: blockchainByBlockchain
+  using:
+    foreign_key_constraint_on: blockchain
+- name: token
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: blockchain
+        payment_token_denom: denom
+      insertion_order: null
+      remote_table:
+        name: tokens
+        schema: public
+array_relationships:
+- name: protocol_instructions
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: destination_asset_blockchain
+        contract_address: destination_asset_contract_address
+      insertion_order: null
+      remote_table:
+        name: protocol_instructions
+        schema: public
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - amount_available
+    - price_per_one
+    - blockchain
+    - contract_address
+    - logo_url
+    - name
+    - token_id
+    - payment_token_denom
+    filter: {}
+    limit: 10000
+  role: front

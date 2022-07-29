@@ -1,0 +1,52 @@
+table:
+  name: channels
+  schema: public
+object_relationships:
+- name: channel
+  using:
+    manual_configuration:
+      column_mapping:
+        counterparty_blockchain: blockchain
+        counterparty_channel: channel_id
+        counterparty_port: port_id
+      insertion_order: null
+      remote_table:
+        name: channels
+        schema: public
+array_relationships:
+- name: channels
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: counterparty_blockchain
+        channel_id: counterparty_channel
+        port_id: counterparty_port
+      insertion_order: null
+      remote_table:
+        name: channels
+        schema: public
+- name: tokens
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: blockchain
+        channel_id: minted_channel
+        port_id: minted_port
+      insertion_order: null
+      remote_table:
+        name: tokens
+        schema: public
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - blockchain
+    - channel_id
+    - client_state
+    - counterparty_blockchain
+    - counterparty_channel
+    - counterparty_port
+    - port_id
+    filter: {}
+    limit: 10000
+  role: front

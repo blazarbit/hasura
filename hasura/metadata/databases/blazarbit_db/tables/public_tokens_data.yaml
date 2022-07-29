@@ -1,0 +1,31 @@
+table:
+  name: tokens_data
+  schema: public
+object_relationships:
+- name: blockchain
+  using:
+    foreign_key_constraint_on: base_blockchain
+array_relationships:
+- name: tokens
+  using:
+    manual_configuration:
+      column_mapping:
+        base_blockchain: base_blockchain
+        base_denom: base_denom
+      insertion_order: null
+      remote_table:
+        name: tokens
+        schema: public
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - base_blockchain
+    - base_denom
+    - logo_url
+    - symbol
+    - symbol_point_exponent
+    - current_price_in_usd
+    filter: {}
+    limit: 10000
+  role: front

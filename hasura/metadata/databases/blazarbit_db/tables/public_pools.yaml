@@ -1,0 +1,40 @@
+table:
+  name: pools
+  schema: public
+object_relationships:
+- name: blockchainByBlockchain
+  using:
+    foreign_key_constraint_on: blockchain
+- name: token
+  using:
+    manual_configuration:
+      column_mapping:
+        base_token_denom: denom
+        blockchain: blockchain
+      insertion_order: null
+      remote_table:
+        name: tokens
+        schema: public
+- name: tokenByQuoteTokenDenomBlockchain
+  using:
+    manual_configuration:
+      column_mapping:
+        blockchain: blockchain
+        quote_token_denom: denom
+      insertion_order: null
+      remote_table:
+        name: tokens
+        schema: public
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - base_token_denom
+    - blockchain
+    - quote_token_denom
+    - id
+    - fee
+    - rate
+    filter: {}
+    limit: 10000
+  role: front
